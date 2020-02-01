@@ -25,6 +25,7 @@ obj-$(CONFIG_ZD1211RW)		+= zd1211rw/
 obj-$(CONFIG_RTL8180)		+= rtl818x/
 obj-$(CONFIG_RTL8187)		+= rtl818x/
 obj-$(CONFIG_RTL8188EU)		+= rtl8188eu/
+obj-$(CONFIG_RTL8188FU)		+= rtl8188fu/
 obj-$(CONFIG_RTL8192CU_ALT)	+= rtl8192cu/
 obj-$(CONFIG_RTLWIFI)		+= rtlwifi/
 

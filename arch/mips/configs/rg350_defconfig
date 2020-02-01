@@ -647,8 +647,9 @@ CONFIG_WLAN=y
 # CONFIG_P54_COMMON is not set
 # CONFIG_RT2X00 is not set
 CONFIG_RTL8188EU=m
+CONFIG_RTL8188FU=m
 CONFIG_RTL8192CU_ALT=m
-# CONFIG_RTL_CARDS is not set
+CONFIG_RTL_CARDS=m
 # CONFIG_WL_TI is not set
 # CONFIG_ZD1211RW is not set
 # CONFIG_MWIFIEX is not set
@@ -1436,9 +1437,8 @@ CONFIG_HID_GENERIC=y
 #
 # USB HID support
 #
-CONFIG_USB_HID=y
+# CONFIG_USB_HID is not set
 # CONFIG_HID_PID is not set
-# CONFIG_USB_HIDDEV is not set
 
 #
 # USB HID Boot Protocol drivers

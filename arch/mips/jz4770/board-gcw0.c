@@ -343,7 +343,7 @@ static struct jz_battery_platform_data gcw0_battery_pdata = {
 	.info = {
 		.name = "battery",
 		.technology = POWER_SUPPLY_TECHNOLOGY_LIPO,
-		.voltage_max_design = 3900000,
+		.voltage_max_design = 4150000,
 		.voltage_min_design = 3300000,
 	},
 };
@@ -557,9 +557,9 @@ static struct platform_device gcw0_i2c4_gpio_device = {
 
 static struct platform_pwm_backlight_data gcw0_backlight_pdata = {
 	.polarity = PWM_POLARITY_NORMAL,
-	.max_brightness = 255,
+	.max_brightness = 200,
 	.dft_brightness = 145,
-	.pwm_period_ns = 40000, /* 25 kHz: outside human hearing range */
+	.pwm_period_ns = 30000, /* 25 kHz: outside human hearing range */
 };
 
 static struct platform_device gcw0_backlight_device = {

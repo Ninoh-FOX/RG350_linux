@@ -38,10 +38,8 @@
 #include <linux/interrupt.h>
 #include <linux/wait.h>
 
-///
 #include <linux/platform_data/jz4770_fb.h>
 #include <video/jzpanel.h>
-///
 
 #include <asm/addrspace.h>
 #include <asm/page.h>
@@ -121,7 +119,7 @@ struct jzfb {
 
 static void *lcd_frame1;
 
-static bool keep_aspect_ratio = true;
+static bool keep_aspect_ratio = false;
 static bool allow_downscaling = false;
 static bool integer_scaling = false;
 
@@ -289,19 +287,23 @@ static int jzfb_check_var(struct fb_var_screeninfo *var, struct fb_info *fb)
 	var->vmode = FB_VMODE_NONINTERLACED;
 	var->yoffset = 0;
 
-	if (var->bits_per_pixel == 15) {
+	switch (var->bits_per_pixel)
+	{
+		case 15:
 		var->transp.offset = 15;
 		var->transp.length = 1;
 		var->red.length = var->green.length = var->blue.length = 5;
 
 		/* Force conventional RGB ordering, unless BGR is requested. */
 		if (var->blue.offset != 10 || var->green.offset != 5 ||
-				var->red.offset != 0) {
+			 var->red.offset != 0) {
 			var->red.offset = 10;
 			var->green.offset = 5;
 			var->blue.offset = 0;
 		}
-	} else if (var->bits_per_pixel == 16) {
+		break;
+		
+		case 16:
 		var->transp.offset = 0;
 		var->transp.length = 0;
 		var->red.length = var->blue.length = 5;
@@ -314,7 +316,9 @@ static int jzfb_check_var(struct fb_var_screeninfo *var, struct fb_info *fb)
 			var->green.offset = 5;
 			var->blue.offset = 0;
 		}
-	} else if (var->bits_per_pixel == 24) {
+		break;
+			
+		case 24:
 		var->transp.offset = 24;
 		var->transp.length = var->red.length =
 				var->green.length = var->blue.length = 8;
@@ -325,7 +329,10 @@ static int jzfb_check_var(struct fb_var_screeninfo *var, struct fb_info *fb)
 			var->red.offset = 16;
 			var->green.offset = 8;
 			var->blue.offset = 0;
-		} else {
+		}
+		break;
+		
+		default:
 		/* Force 32bpp if it's not already */
 		var->bits_per_pixel = 32;
 
@@ -341,6 +348,7 @@ static int jzfb_check_var(struct fb_var_screeninfo *var, struct fb_info *fb)
 			var->green.offset = 8;
 			var->blue.offset = 0;
 		}
+		break;		
 	}
 
 	jzfb->clear_fb = var->bits_per_pixel != fb->var.bits_per_pixel ||
@@ -1359,8 +1367,8 @@ err_remove_allow_downscaling_file:
 	device_remove_file(&pdev->dev, &dev_attr_allow_downscaling.attr);
 err_remove_keep_aspect_ratio_file:
 	device_remove_file(&pdev->dev, &dev_attr_keep_aspect_ratio);
-err_exit_panel:
-	jzfb->pdata->panel_ops->exit(jzfb->panel_old);
+//err_exit_panel:
+//	jzfb->pdata->panel_ops->exit(jzfb->panel_old);
 err_unprepare_lpclk:
 	clk_disable_unprepare(jzfb->lpclk);
 err_unprepare_ipuclk:
